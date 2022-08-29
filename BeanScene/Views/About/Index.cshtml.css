@@ -1,0 +1,160 @@
+﻿body {
+    height:100%;
+    width:100%;
+}
+
+.banner{
+    display:flex;
+    height: 90px;
+    background-color: black;
+    
+    line-height:90px;
+    flex-direction:row;
+    
+
+}
+
+.logoContainer {
+    margin-inline: 30px;
+    height:100%;
+}
+.menuContainer {
+    display:flex;
+    flex-direction:row;
+    height:100%;
+    justify-content:flex-end;
+    width:100%;
+   
+    
+}
+.btnMenuContainer{
+    border:2px solid #ff0000;
+    height:100%;
+
+    
+    
+    
+}
+.btnReservContainer {
+    border: 2px solid #4cff00;
+    
+}
+
+
+.row {
+    width: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    background-color: #d5dddb
+}
+
+.column-text {
+    flex: 50%;
+    margin: 0;
+    padding: 30px;
+}
+
+.column-image {
+    flex: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.title {
+    font-size: 39px;
+    font-weight: bold;
+    font-family: Oswald;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    
+}
+
+
+
+.subtitle {
+    color: #9a7b4f;
+    font-size: 18px;
+    font-family: Merriweather-Italic;
+    margin-top: 0;
+    padding-top:0;
+    margin-bottom: 0;
+}
+
+.text {
+    font-family: 'Open Sans';
+    margin-top: 40px;
+    font-size:14px;
+    color:#666666;
+    line-height:1.8
+}
+
+.infoContainer {
+    background-color: #212121;
+    height: 260px;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 100%;
+}
+
+.infoContent{
+    flex:33.33%;
+    margin-left:15px;
+    margin-right:15px;
+    border-right:1px solid white;
+}
+
+.infoTitle
+{
+    font-family:Oswald;
+    color:white;
+    margin-bottom:40px;
+    font-size:19px;
+    font-weight:bolder;
+}
+.contentText{
+    color:#acacac;
+    font-size:14px;
+    font-family: 'Open Sans';
+    font-weight:500;
+}
+
+.footer-container {
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    align-items: center;
+    background-color: black;
+}
+
+
+
+.footer-text {
+    color: #c1c1c1;
+    font-size: 16px;
+}
+
+    .footer-text a {
+        text-decoration: none;
+        color: darkslategrey;
+        font-weight: bold
+    }
+@font-face {
+    font-family: Oswald;
+    src: url("/font/Oswald-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Merriweather-Italic";
+    src: url("/font/Merriweather-Italic.ttf")
+
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("/font/OpenSans-Regular.ttf")
+}
