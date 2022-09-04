@@ -1,0 +1,64 @@
+﻿@model IEnumerable<BeanScene.ViewModels.ThumbnailboxViewModel>
+@{
+    
+    Layout = "~/Views/Shared/_MgmtLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    .newBtn {
+    text-decoration:none;
+    height:28px;
+    padding:0;
+    font-size:12px;
+    width:55px;
+    vertical-align:middle;
+    line-height:28px;
+    border-radius:18px;
+    margin:0px;
+}
+</style>
+
+
+<div style="width:100%">
+    <div style="display:flex;height:32px;line-height:32px;vertical-align:middle">
+        <div>
+            <Text style="font-size:32px;font-weight:bold;">Menu</Text>
+        </div>
+        <div class="newBtnContainer">
+            <a class="btn btn-primary newBtn" asp-controller="Food" asp-action="Create">
+                <span class="glyphicon glyphicon-plus icon"></span><span> New</span></a>
+        </div>
+        <div style="width:100%">
+            @using(Html.BeginForm("AllFood", "Home", FormMethod.Get))
+            {
+
+
+                <div style="display:flex;">
+                    <div class="searchContainer" style="position:relative">
+                       @* <i class="fa fa-search icon" style="position:absolute;left: 8px;top: 10px;color: gray;"></i>*@
+                     
+                        @Html.Editor("search", new { htmlAttributes = new { @class = "form-control input-lg", placeholder="search food...", style = "font-size:14px;height:100%;padding-left:16px;display: inline-block;border: 2px solid grey;box-sizing: border-box;border-radius:4px"}})
+                        
+                    
+                        <div  class="searchBtnContainer">
+                        <button type="submit" value="Search" class="searchBtn">
+                            <span class="glyphicon glyphicon-search"></span> Search
+                        </button>
+                        </div>
+                    </div>
+                </div>
+
+               
+            }
+        </div>
+    </div>
+
+    <div style="width:100%;height:70vh;overflow:auto;margin-top:50px">
+        @foreach(var area in Model)
+        {
+            @Html.Partial("_ThumbnailPartial", area)
+        }
+    </div>
+</div>
+

@@ -1,0 +1,29 @@
+﻿@model BeanScene.ViewModels.ThumbnailboxViewModel;
+
+<div style="width:100%;display:flex;flex-wrap:wrap">
+    @if (Model.Thumbnails != null)
+    {
+        foreach (var thumbnail in Model.Thumbnails)
+        {
+            <div style="margin-bottom:0px; margin-top:15px; width:200px;margin-right:30px;height:300px">
+                <div>
+                    <img class="thumbnail" src="@thumbnail.ImageUrl" height="150" width="200" />
+                </div>
+                <div style="display:flex;flex-direction:column;justify-content:space-between;">
+                    <div style="display:flex;flex-direction:row;justify-content:space-between;height:50px;">   
+                        <div>
+                            <h6 style="font-size:16px;font-weight:bold;padding-top:10px;margin-bottom:0px;"><a href="@thumbnail.Name">@thumbnail.Name</a></h6>
+                        </div>
+                        <div style="width:40%;text-align:end;display:flex;flex-direction:column;justify-content:center">
+                            <Text style="font-size:20px;font-weight:bold">$@Html.Raw(thumbnail.Price)</Text>
+                            @*<a class="btn btn-primary btn-md" asp-controller="FoodDetail" asp-route-id="@thumbnail.FoodId" asp-action="Index">Details</a>*@
+                        </div>
+                    </div>
+                    <div style="vertical-align:text-top;padding-top:5px">
+                        <Text>@Html.Raw(thumbnail.Description)</Text>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

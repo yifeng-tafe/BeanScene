@@ -1,0 +1,23 @@
+﻿a{
+    color:white;   
+    border:0px;
+    background-color:#0275d8;
+    width:80px;
+    height:30px;
+    text-decoration:none;
+    text-align:center;
+    line-height:30px;
+    vertical-align:middle;
+    border-radius:4px;
+
+}
+
+button{
+    background-color:purple;
+}
+
+a:hover{
+    color:white;
+    text-decoration:none
+}
+

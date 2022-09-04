@@ -1,8 +1,8 @@
-﻿@model BeanScene.Models.Food
+﻿@model BeanScene.ViewModels.FoodViewModel
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_MgmtLayout.cshtml";
 }
 
 <h1>Delete</h1>
@@ -13,39 +13,39 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Food.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Food.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Food.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Food.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Food.Price)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Food.Price)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageURL)
+            @Html.DisplayNameFor(model => model.Food.ImageURL)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageURL)
+            @Html.DisplayFor(model => model.Food.ImageURL)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Catagory)
+            @Html.DisplayNameFor(model => model.Food.Catagory)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Catagory.Name)
+            @Html.DisplayFor(model => model.Food.Catagory.Name)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Food.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

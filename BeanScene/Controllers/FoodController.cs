@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BeanScene.Areas.Identity.Data;
 using BeanScene.Models;
+using BeanScene.ViewModels;
 
 namespace BeanScene.Controllers
 {
@@ -41,15 +42,24 @@ namespace BeanScene.Controllers
             {
                 return NotFound();
             }
+            var model = new FoodViewModel()
+            {
+                Food = food,
+                Categories = _context.Category.ToList()
+            };
 
-            return View(food);
+            return View(model);
         }
 
         // GET: Food/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
-            return View();
+            var model = new FoodViewModel()
+            {
+                Categories = _context.Category.ToList()
+            };
+
+            return View(model);
         }
 
         // POST: Food/Create
@@ -57,15 +67,26 @@ namespace BeanScene.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,ImageURL,CategoryId")] Food food)
+
+        public async Task<IActionResult> Create(FoodViewModel foodVM)
         {
-            if (ModelState.IsValid)
-            {
+                var food = new Food
+                {
+                    Name = foodVM.Food.Name,
+                    Description = foodVM.Food.Description,
+                    Price = foodVM.Food.Price,
+                    ImageURL = foodVM.Food.ImageURL,
+                    Catagory = foodVM.Food.Catagory,
+                    CategoryId = foodVM.Food.CategoryId,
+                };
+                
+            //    if (ModelState.IsValid)
+            //{
                 _context.Add(food);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", food.CategoryId);
+            //}
+            //ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", food.CategoryId);
             return View(food);
         }
 
@@ -82,8 +103,12 @@ namespace BeanScene.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", food.CategoryId);
-            return View(food);
+            var model = new FoodViewModel()
+            {
+                Food = food,
+                Categories = _context.Category.ToList()
+            };
+            return View(model);
         }
 
         // POST: Food/Edit/5
@@ -91,35 +116,39 @@ namespace BeanScene.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,ImageURL,CategoryId")] Food food)
+        public async Task<IActionResult> Edit(FoodViewModel foodVM)
         {
-            if (id != food.Id)
-            {
-                return NotFound();
-            }
+            //if (id != food.Id)
+            //{
+            //    return NotFound();
+            //}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(food);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FoodExists(food.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", food.CategoryId);
-            return View(food);
+            //if (ModelState.IsValid)
+            //{
+            //try
+            //{
+            //    _context.Update(food);
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!FoodExists(food.Id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            ////}
+            //return RedirectToAction(nameof(Index));
+            foodVM.Categories = _context.Category.ToList();
+            _context.Update(foodVM.Food);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+            //}
+            //ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", food.CategoryId);
+            //return View(food);
         }
 
         // GET: Food/Delete/5
@@ -137,8 +166,13 @@ namespace BeanScene.Controllers
             {
                 return NotFound();
             }
+            var model = new FoodViewModel()
+            {
+                Food = food,
+                Categories = _context.Category.ToList()
+            };
 
-            return View(food);
+            return View(model);
         }
 
         // POST: Food/Delete/5

@@ -1,0 +1,166 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BeanSceneWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BeanScene.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />
+</head>
+
+<style>
+
+    body{
+        width:100%;
+    }
+    .container {
+    height: 100%;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex:1;
+    margin:0;
+    padding:0;
+
+}
+
+    .menuLogo {
+    height:20px;
+    margin-right:20px
+    }
+
+    .ulContainer {
+    margin-top: 50px;
+    height: 100%;
+    width: 100%;
+    
+    padding-left:20px;
+    padding-right:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+
+}
+    .ulContainer ul{
+        list-style:none;
+        
+        
+        
+    
+    }
+        .ulContainer ul li{
+            color:white;
+            margin-top:20px;
+            
+            
+        }
+
+        .ulContainer ul li span{
+            font-family:'Open Sans';
+            font-size:16px;
+            line-height:100%;
+            vertical-align:middle
+            
+        }
+
+        .ulContainer ul li a{
+            text-decoration:none;
+            color:white;
+        }
+
+            .ulContainer ul li a:after {
+                text-decoration: none;
+            }
+</style>
+    
+
+<html>
+<body>
+    <div style="display:flex;width:100%;height:100%;height:100vh">
+        <div class="menuColumn">
+            <div class="logoContainer">
+                <img src="~/images/Logo_landscape.png" width="60%"/>
+            </div>
+            <div class="ulContainer">
+                
+                <ul>
+                    <li>
+                        <img class="menuLogo" src="~/images/icon/home_white.png"/>
+                        <a asp-controller="Home" asp-action="Index"><span>Home</span></a>
+                    </li>
+                    <li> 
+                        <img class="menuLogo" src="~/images/icon/booking_white.png"/>
+                        <span>Reservation</span>
+                    </li>
+                    <li>
+                        <img class="menuLogo" src="~/images/icon/table_white.png"/>
+                        <span>Sitting</span>
+                     </li>
+                    <li>
+                        <img class="menuLogo" src="~/images/icon/menu_white.png"/>
+                        @*<a asp-controller="Food" asp-action="Index"><span>Menu</span></a> *@
+                        <a asp-controller="Home" asp-action="AllFood"><span>Menu</span></a>
+                    </li>
+                    <li>
+                        <img class="menuLogo" src="~/images/icon/guest_white.png"/>
+                        <span>Guests</span>
+                    </li>
+                    <li>
+                        <img class="menuLogo" src="~/images/icon/report_white.png"/>
+                        <span>Reports</span>
+                    </li>
+                    <li>
+                        <img class="menuLogo" src="~/images/icon/staff_white.png"/>
+                        <span>Staff</span>
+                    </li>
+                    <li>
+                        <img class="menuLogo" src="~/images/icon/setting_white.png"/>
+                        <span>Settings</span>
+                    </li>
+                    
+                </ul>
+                <div style="width:100%;border-bottom: 2px grey solid">
+                    
+                </div>
+            </div>
+            <div class="profileContainer">
+                <div>
+                    <img src="~/images/TomCruise.png" height="60px" style="border-radius:50%" />
+                </div>
+                <div class="profile">
+                    
+                        Yifeng Sun
+                        <br />
+                        iorisun.au@gmail.com
+                    
+                </div>
+            </div>
+        </div>
+        <div class="contentColumn">
+            
+              
+                    
+                        @RenderBody()
+                    
+                
+           
+        </div>
+       
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

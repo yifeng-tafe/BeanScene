@@ -1,0 +1,84 @@
+﻿body {
+}
+
+
+
+    /* Works on Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: white;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: grey;
+        border-radius: 20px;
+        border: 3px solid white;
+    }
+
+.searchBtnContainer {
+    height: 30px;
+    align-items: center;
+    width: 70px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100%;
+    position: absolute;
+    top: 1px;
+    right: 0px;
+}
+
+.searchBtn {
+    height: 100%;
+    width: 70px;
+    padding: 0;
+    font-size: 12px;
+    border: 0px;
+    background-color: grey;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius:4px;
+    color: white;
+    vertical-align: top;
+    
+}
+
+.searchContainer {
+    margin-right:20px;
+    margin-left:20px;
+    height:32px;
+    width:60%;
+    line-height:32px;
+    vertical-align:middle;
+
+}
+
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.input-icons i {
+    position: absolute;
+}
+
+.newBtnContainer {
+    margin-left:15px;
+    width:70px;
+    height:32px;
+    text-align:center;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+
+    
+}
+
+.icon{
+    font-size:10px;
+
+}
+
+
+
