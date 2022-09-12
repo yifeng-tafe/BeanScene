@@ -21,11 +21,9 @@
         <ul>
             <li><a asp-area="" asp-controller="Home" asp-action="Index">HOME</a></li>
             <li><a asp-area="" asp-controller="About" asp-action="Index">ABOUT</a></li>
-            <li><a asp-area="" asp-controller="Category" asp-action="Index">CATEGORY</a></li>
-            <li><a asp-area="" asp-controller="Food" asp-action="Index">FOOD</a></li>
-            <li><a href="#">CONTACT</a></li>
-            <li><a asp-area="Identity" asp-page="/Account/Login">LOGIN</a></li>
-            <li><a href="#">RESERVATION</a></li>
+            <li><a asp-area="" asp-controller="Category" asp-action="Index">CONTACT</a></li>
+            <li><a asp-area="identity" asp-page="/Account/Login">LOGIN</a></li>
+            <li><a asp-area="" asp-controller="Reservation" asp-action="Index">RESERVATION</a></li>
 
 
         </ul>
@@ -33,18 +31,31 @@
     </div>
 
     <script>
+        function closeBtn() {
+            document.getElementById('active1').checked = false;
+        };
+        function changeBackText() {
+            setTimeout(function() {
+                document.getElementById("resLabel").innerHTML = "MAKE A RESERVATION";
+                document.getElementById("btnStyle").style.visibility = "visible";
+            }, 350)
+            };
         function changeText() {
             document.getElementById("resLabel").innerHTML = "";
             document.getElementById("btnStyle").style.visibility = "hidden";
-    }
+        };
     </script>
 
     <input type="checkbox" id="active1" onclick=changeText()>
     <label for="active1" class="btn" id="btnStyle"><span id="resLabel">MAKE A RESERVATION</span></label>
     <label for="active1" class="close"></label>
     <div class="resWrapper"> 
-        
-        <div style="display:flex;flex-direction:row;padding-top:80px">
+        <div style="width:100%;text-align:end;padding-top:20px;padding-right:30px"> 
+            <button style="text-decoration:none;background:#d4ddda;border:0" onclick=closeBtn(),changeBackText()>
+                <img src="/images/icon/cross-black.png" width="30"/>
+            </button>
+        </div>
+        <div style="display:flex;flex-direction:row;padding-top:0px">
             <div class="infoContainer">
                 <p style="font-weight:bold; font-size:32px;">MAKE A RESERVATION</p>
                 <p>We look forward to welcoming you to Quay.</p>
