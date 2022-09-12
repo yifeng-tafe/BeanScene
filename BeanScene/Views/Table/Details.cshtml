@@ -1,0 +1,31 @@
+﻿@model BeanScene.ViewModels.TableViewModel;
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Table</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Table.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Table.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Areas)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Table.Areas.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Table.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

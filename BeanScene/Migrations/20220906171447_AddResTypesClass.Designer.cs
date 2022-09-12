@@ -4,6 +4,7 @@ using BeanScene.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeanScene.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220906171447_AddResTypesClass")]
+    partial class AddResTypesClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,83 +164,6 @@ namespace BeanScene.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Food");
-                });
-
-            modelBuilder.Entity("BeanScene.Models.Reservation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfGuest")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Requirement")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReservationTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ReserveDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TableId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReservationTypeId");
-
-                    b.ToTable("Reservation");
-                });
-
-            modelBuilder.Entity("BeanScene.Models.ReservationTime", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReservationTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReservationTypeId");
-
-                    b.ToTable("ReservationTime");
                 });
 
             modelBuilder.Entity("BeanScene.Models.ReservationType", b =>
@@ -460,28 +385,6 @@ namespace BeanScene.Migrations
                         .IsRequired();
 
                     b.Navigation("Catagory");
-                });
-
-            modelBuilder.Entity("BeanScene.Models.Reservation", b =>
-                {
-                    b.HasOne("BeanScene.Models.ReservationType", "ReserveType")
-                        .WithMany()
-                        .HasForeignKey("ReservationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ReserveType");
-                });
-
-            modelBuilder.Entity("BeanScene.Models.ReservationTime", b =>
-                {
-                    b.HasOne("BeanScene.Models.ReservationType", "ReservationTypes")
-                        .WithMany()
-                        .HasForeignKey("ReservationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ReservationTypes");
                 });
 
             modelBuilder.Entity("BeanScene.Models.Table", b =>

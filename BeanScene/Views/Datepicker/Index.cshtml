@@ -1,0 +1,30 @@
+﻿@model BeanScene.Models.Reservation
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div id='date_picker'>
+@using(Html.BeginForm())
+{
+    @Html.EditorFor(model => model.ReserveDate, new { htmlAttributes = new {@class = "datepicker"}})
+}
+</div>
+
+<link href="~/Contents/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+   $(".datepicker").datepicker({
+      dateFormat: "dd-mm-yy",
+      changemonth: true,
+      changeyear: true
+      });
+   });
+    </script>
+}
+

@@ -9,32 +9,32 @@
 
 <h4>Food</h4>
 <hr />
-<div class="row">
+<div style="display:flex;flex-direction:row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Food.Id" />
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom:15px">
                 <label asp-for="Food.Name" class="control-label"></label>
-                <input asp-for="Food.Name" class="form-control" />
+                <input asp-for="Food.Name" class="form-control" style="font-size:12px" />
                 <span asp-validation-for="Food.Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom:15px">
                 <label asp-for="Food.Description" class="control-label"></label>
-                <input asp-for="Food.Description" class="form-control" />
+                <input asp-for="Food.Description" class="form-control" style="font-size:12px" />
                 <span asp-validation-for="Food.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom:15px">
                 <label asp-for="Food.Price" class="control-label"></label>
-                <input asp-for="Food.Price" class="form-control" />
+                <input asp-for="Food.Price" class="form-control" style="font-size:12px" />
                 <span asp-validation-for="Food.Price" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom:15px">
                 <label asp-for="Food.ImageURL" class="control-label"></label>
-                <input asp-for="Food.ImageURL" class="form-control" />
+                <input asp-for="Food.ImageURL" class="form-control" style="font-size:12px" />
                 <span asp-validation-for="Food.ImageURL" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom:15px">
                 <label asp-for="Food.CategoryId" class="control-label"></label>
                 <br />
                 @Html.DropDownListFor(model=>model.Food.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new {@class="form-control- form-select"})
@@ -44,12 +44,16 @@
                 <span asp-validation-for="Food.CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary btn-sm" />
-                <a asp-controller="Home" asp-action="AllFood" type="button" class="btn btn-primary btn-sm">
-                    <span class="glyphicon glyphicon-list"></span>
+                <input type="submit" value="Save" class="btn btn-success btn-md" />
+                <a asp-controller="Home" asp-action="AllFood" type="button" class="btn btn-primary btn-md">
+                    @*<span class="glyphicon glyphicon-list"></span>*@
                     <span>Go Back</span></a>
             </div>
         </form>
+    </div>
+    <div style="border:1px solid grey; height:min-content;margin-left:30px;" >
+        
+        <img src="~/images/food/bacon_and_egg_roll.jpg" width="300" style="padding:5px"/>
     </div>
 </div>
 

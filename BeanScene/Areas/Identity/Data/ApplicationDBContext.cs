@@ -12,8 +12,21 @@ namespace BeanScene.Areas.Identity.Data
     {
         public DbSet<BeanScene.Models.Category> Category { get; set; }
         public DbSet<BeanScene.Models.Food> Food { get; set; }
-        public DbSet<Reservation> Reservation { get; set; }
+        //public DbSet<Reservation> Reservation { get; set; }
+        //public DbSet<ReservationType> ReservationType { get; set; }
         public DbSet<Role> Role { get; set; }
+        public DbSet<Area> Area { get; set; }
+        public DbSet<BeanScene.Models.Table>? Table { get; set; }
+        public DbSet<BeanScene.Models.ReservationType>? ReservationType { get; set; }
+
+        
+        
+        //public DbSet<BreakfastTime> BreakfastTime { get; set; }
+        //public DbSet<LunchTime> LunchTime { get; set; }
+        //public DbSet<DinnerTime> DinnerTime { get; set; }
+        //public DbSet<FunctionTime> FunctionTime { get; set; }
+
+
 
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
@@ -62,6 +75,12 @@ namespace BeanScene.Areas.Identity.Data
 
             }
         }
+
+        public DbSet<BeanScene.Models.ReservationTime>? ReservationTime { get; set; }
+
+        public DbSet<BeanScene.Models.Reservation>? Reservation { get; set; }
+
+
 
     }
 }

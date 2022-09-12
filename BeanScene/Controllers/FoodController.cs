@@ -145,7 +145,8 @@ namespace BeanScene.Controllers
             foodVM.Categories = _context.Category.ToList();
             _context.Update(foodVM.Food);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AllFood", "Home");
+
             //}
             //ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", food.CategoryId);
             //return View(food);
