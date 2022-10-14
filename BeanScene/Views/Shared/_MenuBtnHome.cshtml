@@ -10,6 +10,24 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 </head>
+<script>
+        function closeBtn() {
+            document.getElementById('active1').checked = false;
+        };
+        function changeBackText() {
+            setTimeout(function() {
+                document.getElementById("resLabel").innerHTML = "MAKE A RESERVATION";
+                document.getElementById("btnStyle").style.visibility = "visible";
+            }, 350)
+        };
+        function changeText() {
+            document.getElementById("resLabel").innerHTML = "";
+            document.getElementById("btnStyle").style.visibility = "hidden";
+        };
+        function nextStep() {
+            document.getElementById("bar").src = "/images/icon/stepsbar03.png";
+        };
+    </script>
 
 
 <div>
@@ -30,30 +48,17 @@
 
     </div>
 
-    <script>
-        function closeBtn() {
-            document.getElementById('active1').checked = false;
-        };
-        function changeBackText() {
-            setTimeout(function() {
-                document.getElementById("resLabel").innerHTML = "MAKE A RESERVATION";
-                document.getElementById("btnStyle").style.visibility = "visible";
-            }, 350)
-            };
-        function changeText() {
-            document.getElementById("resLabel").innerHTML = "";
-            document.getElementById("btnStyle").style.visibility = "hidden";
-        };
-    </script>
+    
 
     <input type="checkbox" id="active1" onclick=changeText()>
     <label for="active1" class="btn" id="btnStyle"><span id="resLabel">MAKE A RESERVATION</span></label>
     <label for="active1" class="close"></label>
-    <div class="resWrapper"> 
-        <div style="width:100%;text-align:end;padding-top:20px;padding-right:30px"> 
+    <div class="resWrapper">
+        <div style="width:100%;text-align:end;padding-top:20px;padding-right:30px">
             <button style="text-decoration:none;background:#d4ddda;border:0" onclick=closeBtn(),changeBackText()>
-                <img src="/images/icon/cross-black.png" width="30"/>
+                <img src="/images/icon/cross-black.png" width="30" />
             </button>
+
         </div>
         <div style="display:flex;flex-direction:row;padding-top:0px">
             <div class="infoContainer">
@@ -64,7 +69,33 @@
                 <p>Please view our reservation and cancellation policy ahead of your visit to Quay</p>
             </div>
             <div class="optionContainer">
-                <img src="~/images/icon/stepsbar01.png" width="250" />
+                <img src="~/images/icon/stepsbar01.png" id="bar" width="250" />
+                <div style="background:white;border-radius:4px;height:300px;width:400px;margin-top:50px">
+                datepicker
+                </div>
+                <div style="background:white;border-radius:4px;height:150px;width:400px;margin-top:50px;align-items:center">
+                <text style="font-family:sans-serif;font-size:20px;margin-top:20px">How many people are coming?</text>
+                <div style="display:flex;flex-direction:row;margin-top:50px;justify-content:center">
+                <div>
+                <input style="font-size:26px;background:white;border-radius:4px;border-color:#313131;border-width:1px;width:120px;height:50px;margin-right:20px;text-align:center" placeholder="0"/>
+                </div>
+                <div>
+                <button style="margin-right:20px;height:50px;width:50px;border-radius:50%;background:black;color:white">
+                +
+                </button>
+                </div>
+                <div>
+                <button style="height:50px;width:50px;border-radius:50%;background:black;color:white">
+                -
+                </button>
+                </div>
+                </div>
+                </div>
+
+                <div style="display:flex;flex-direction:row;justify-content:space-between;margin-top:50px">
+                <button style="height:40px;width:100px;margin-right:20px" onclick=lastStep()>Back</button>
+                <button style="height:40px;width:100px" onclick=nextStep()>NEXT</button>
+                </div>
             </div>
         </div>
     </div>
@@ -101,7 +132,7 @@
         }
 
         .btn::after {
-            content: '
+            content: ''
         }
 
     .image {
@@ -389,12 +420,11 @@
     .optionContainer {
         padding: 20px;
         flex: 1.5;
-        align-items:center;
-        text-align:center
+        align-items: center;
+        text-align: center;
+        display: flex;
+        flex-direction: column
     }
-
-
-
 
 
 </style>
