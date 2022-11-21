@@ -1,0 +1,200 @@
+﻿@model BeanScene.ViewModels.ReservationViewModel
+
+@{
+    ViewData["Title"] = "Confirmed";
+    Layout = "~/Views/Shared/_MgmtLayout.cshtml";
+}
+
+<h1>Reservation Management</h1>
+
+<div>
+    <hr />
+    <div style="display:flex;flex-direction:row">
+        <div style="width:40%">
+        <dl class="row">
+            <dt class="col-sm-5">
+                Request Made Time:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.ReservationMadeTime)
+            </dd>
+            <dt class="col-sm-5">
+                Member Id:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.MemberId)
+            </dd>
+            <dt class="col-sm-5">
+                Reservation Date:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.ReservationDate)
+            </dd>
+            <dt class="col-sm-5">
+                Reserve TimeSlot:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.ReserveTime.Name)
+            </dd>
+            <dt class="col-sm-5">
+                Number Of Guest:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.NumberOfGuest)
+            </dd>
+            <dt class="col-sm-5">
+                Requirement:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.Requirement)
+            </dd>
+            <dt class="col-sm-5">
+                First Name:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.FirstName)
+            </dd>
+            <dt class="col-sm-5">
+                Last Name:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.LastName)
+            </dd>
+            <dt class="col-sm-5">
+                Email:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.Email)
+            </dd>
+            <dt class="col-sm-5">
+                Contact Number:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.ContactNumber)
+            </dd>
+            <dt class="col-sm-5">
+                Request Source:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.RequestSource)
+            </dd>
+            <dt class="col-sm-5">
+                Request Status:
+            </dt>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Reservation.Status)
+            </dd>
+        </dl>
+        </div>
+        <div style="width:50%;border-left-width:1px;border-color:grey;border-left-style:solid;padding-left:20px">
+            <text style="color:green"><strong>Table Availability Check</strong></text>
+            
+
+            <dl class="row">
+                <dt></dt>
+                <dd><p> </p></dd>
+                <dt class="col-sm-3">
+                    Need Table:
+                </dt>
+                <dd class="col-sm-9">
+                    @(Math.Ceiling((double)(Model.Reservation.NumberOfGuest /4.0)))
+                </dd>
+                <dt></dt>
+                <dd><p> </p></dd>
+                <dt class="col-sm-3">
+                    Table Available:
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.TotalAvailableTables)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+    <hr />
+<div style="display:flex;flex-direction:row">
+       
+
+        <div style="width:100px">
+            <h4 style="color:green"><strong>Table Assign</strong></h4>
+            @foreach (Table table in Model.TablesAssigned)
+            {
+                <p>@table.Name</p>
+            }
+            <br />
+        </div style="margin-left:60px">
+        
+        <div style="width:250px;margin-left:60px">
+            <h4 style="color:rebeccapurple"><strong>Add Table</strong></h4>
+            @*@Html.DropDownListFor("Table", model=>model.Table, new SelectList(Model.Table), new {@class="form-control- form-select"})*@
+            <form method="post" action="@Url.Action("AddTable")" style="display:flex;flex-direction:row">
+                @Html.Hidden("ReservationId", Model.Reservation.Id)
+                @Html.DropDownList("TableId", new SelectList(Model.TablesAvailable, "Id", "Name"), new {@class="form-control- form-select"})
+                <button style="width:150px; background-color:#0d6efd; color:white; border-width:0.5px;border-color:grey; border-style:solid" type="submit" name="submitAddTable">Add table</button>
+            </form>
+            <br />
+        </div>
+        
+        <div style="width:250px;margin-left:60px">
+            <h4 style="color:red"><strong>Remove Table</strong></h4>
+            <form method="post" action="@Url.Action("RemoveTable")" style="display:flex;flex-direction:row">
+                @Html.Hidden("ReservationId", Model.Reservation.Id)
+                @Html.DropDownList("TableId", new SelectList(Model.TablesAssigned, "Id", "Name"), new {@class="form-control- form-select"})
+                <button style="width:200px; background-color:#dc3545;color:white; border-width:0.5px;border-color:grey; border-style:solid" type="submit" name="submitRemoveTable">Remove table</button>
+            </form>
+        </div>
+    </div>
+
+
+<br />
+<div style="display:flex;flex-direction:row">
+   <div>
+        <form method="POST" action="@Url.Action("SetStatus")">
+           <input type="hidden" value="@Model.Reservation.Id" name="id" class="btn-primary btn-sm"/>
+           <input type="hidden" value="@Reservation.StatusEnum.Comfirmed" name="status" class="btn-primary btn-sm"/>
+           <button class="btn btn-success btn-lg" type="submit">Confirm Request</button>
+        </form>
+    </div>
+    <div style="padding-left:20px">
+        <form method="POST" action="@Url.Action("SetStatus")">
+           <input type="hidden" value="@Model.Reservation.Id" name="id" class="btn-primary btn-sm"/>
+           <input type="hidden" value="@Reservation.StatusEnum.Rejected" name="status" class="btn-primary btn-sm"/>
+           <button class="btn btn-danger btn-lg" type="submit">Reject Request</button>
+        </form>
+    </div>
+    <div style="padding-left:20px">
+        <form method="POST" action="@Url.Action("SetStatus")">
+           <input type="hidden" value="@Model.Reservation.Id" name="id" class="btn-primary btn-sm"/>
+           <input type="hidden" value="@Reservation.StatusEnum.Requested" name="status" class="btn-primary btn-sm"/>
+           <button class="btn btn-secondary btn-lg" type="submit">Set Status Requested</button>
+        </form>
+    </div>
+    <div style="padding-left:20px">
+        <form method="POST" action="@Url.Action("SetStatus")">
+           <input type="hidden" value="@Model.Reservation.Id" name="id" class="btn-primary btn-sm"/>
+           <input type="hidden" value="@Reservation.StatusEnum.Seated" name="status" class="btn-primary btn-sm"/>
+           <button class="btn btn-warning btn-lg" type="submit">Set Status Seated</button>
+        </form>
+    </div>
+    <div style="padding-left:20px">
+        <form method="POST" action="@Url.Action("SetStatus")">
+           <input type="hidden" value="@Model.Reservation.Id" name="id" class="btn-primary btn-sm"/>
+           <input type="hidden" value="@Reservation.StatusEnum.Ordered" name="status" class="btn-primary btn-sm"/>
+           <button class="btn btn-info btn-lg" type="submit">Set Status Ordered</button>
+        </form>
+    </div>
+    <div style="padding-left:20px">
+        <form method="POST" action="@Url.Action("SetStatus")">
+           <input type="hidden" value="@Model.Reservation.Id" name="id" class="btn-primary btn-sm"/>
+           <input type="hidden" value="@Reservation.StatusEnum.Paid" name="status" class="btn-primary btn-sm"/>
+           <button class="btn btn-primary btn-lg" type="submit">Set Status Paid</button>
+        </form>
+    </div>
+    <div style="padding-left:20px">
+        <form method="POST" action="@Url.Action("SetStatus")">
+           <input type="hidden" value="@Model.Reservation.Id" name="id" class="btn-primary btn-sm"/>
+           <input type="hidden" value="@Reservation.StatusEnum.Completed" name="status" class="btn-primary btn-sm"/>
+           <button class="btn btn-dark btn-lg" type="submit">Set Status Completed</button>
+        </form>
+    </div>
+</div>

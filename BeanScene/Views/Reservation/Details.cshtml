@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
@@ -12,28 +11,28 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TableId)
+            @Html.DisplayNameFor(model => model.ReservationMadeTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TableId)
+            @Html.DisplayFor(model => model.ReservationMadeTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.MemberId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
+            @Html.DisplayFor(model => model.MemberId)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReserveDate)
+            @Html.DisplayNameFor(model => model.ReservationDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReserveDate)
+            @Html.DisplayFor(model => model.ReservationDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReserveType)
+            @Html.DisplayNameFor(model => model.ReserveTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReserveType.Name)
+            @Html.DisplayFor(model => model.ReserveTime.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.NumberOfGuest)

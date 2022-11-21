@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BeanScene.Migrations
 {
-    public partial class AddReservationClasses1 : Migration
+    public partial class AddReservationClass : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,10 +15,10 @@ namespace BeanScene.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TableId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReserveDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReservationTypeId = table.Column<int>(type: "int", nullable: false),
+                    ReservationMadeTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MemberId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReservationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReservationTimeId = table.Column<int>(type: "int", nullable: false),
                     NumberOfGuest = table.Column<int>(type: "int", nullable: false),
                     Requirement = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -31,23 +31,23 @@ namespace BeanScene.Migrations
                 {
                     table.PrimaryKey("PK_Reservation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservation_ReservationType_ReservationTypeId",
-                        column: x => x.ReservationTypeId,
-                        principalTable: "ReservationType",
+                        name: "FK_Reservation_ReservationTime_ReservationTimeId",
+                        column: x => x.ReservationTimeId,
+                        principalTable: "ReservationTime",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservation_ReservationTypeId",
+                name: "IX_Reservation_ReservationTimeId",
                 table: "Reservation",
-                column: "ReservationTypeId");
+                column: "ReservationTimeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Reservation");
+            //migrationBuilder.DropTable(
+            //    name: "Reservation");
         }
     }
 }

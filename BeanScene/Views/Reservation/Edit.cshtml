@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Edit</h1>
@@ -15,24 +14,24 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="TableId" class="control-label"></label>
-                <input asp-for="TableId" class="form-control" />
-                <span asp-validation-for="TableId" class="text-danger"></span>
+                <label asp-for="ReservationMadeTime" class="control-label"></label>
+                <input asp-for="ReservationMadeTime" class="form-control" />
+                <span asp-validation-for="ReservationMadeTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
+                <label asp-for="MemberId" class="control-label"></label>
+                <input asp-for="MemberId" class="form-control" />
+                <span asp-validation-for="MemberId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReserveDate" class="control-label"></label>
-                <input asp-for="ReserveDate" class="form-control" />
-                <span asp-validation-for="ReserveDate" class="text-danger"></span>
+                <label asp-for="ReservationDate" class="control-label"></label>
+                <input asp-for="ReservationDate" class="form-control" />
+                <span asp-validation-for="ReservationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReservationTypeId" class="control-label"></label>
-                <select asp-for="ReservationTypeId" class="form-control" asp-items="ViewBag.ReservationTypeId"></select>
-                <span asp-validation-for="ReservationTypeId" class="text-danger"></span>
+                <label asp-for="ReservationTimeId" class="control-label"></label>
+                <select asp-for="ReservationTimeId" class="form-control" asp-items="ViewBag.ReservationTimeId"></select>
+                <span asp-validation-for="ReservationTimeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumberOfGuest" class="control-label"></label>

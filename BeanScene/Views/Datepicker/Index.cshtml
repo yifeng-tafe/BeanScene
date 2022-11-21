@@ -1,4 +1,4 @@
-﻿@model BeanScene.Models.Reservation
+﻿@*@model BeanScene.Models.Reservation
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,7 +8,7 @@
 <div id='date_picker'>
 @using(Html.BeginForm())
 {
-    @Html.EditorFor(model => model.ReserveDate, new { htmlAttributes = new {@class = "datepicker"}})
+    @Html.EditorFor(model => model.ReservationDate, new { htmlAttributes = new {@class = "datepicker"}})
 }
 </div>
 
@@ -25,5 +25,5 @@
       });
    });
     </script>
-}
+}*@
 

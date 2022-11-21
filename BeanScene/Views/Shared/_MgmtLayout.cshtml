@@ -2,6 +2,13 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
+@using Microsoft.AspNetCore.Identity
+@using BeanScene.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,147 +23,200 @@
 
 <style>
 
-    body{
-        width:100%;
+    body {
+        width: 100%;
     }
-    .container {
-    height: 100%;
-    height: 100vh;
-    width: 100%;
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    flex:1;
-    margin:0;
-    padding:0;
 
-}
+    .container {
+        height: 100%;
+        height: 100vh;
+        width: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        margin: 0;
+        padding: 0;
+    }
 
     .menuLogo {
-    height:20px;
-    margin-right:20px
+        height: 20px;
+        margin-right: 20px
     }
 
     .ulContainer {
-    margin-top: 50px;
-    height: 100%;
-    width: 100%;
-    
-    padding-left:20px;
-    padding-right:20px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-
-
-}
-    .ulContainer ul{
-        list-style:none;
-        
-        
-        
-    
+        margin-top: 50px;
+        height: 100%;
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
-        .ulContainer ul li{
-            color:white;
-            margin-top:20px;
-            
-            
+
+        .ulContainer ul {
+            list-style: none;
         }
 
-        .ulContainer ul li span{
-            font-family:'Open Sans';
-            font-size:16px;
-            line-height:100%;
-            vertical-align:middle
-            
-        }
-
-        .ulContainer ul li a{
-            text-decoration:none;
-            color:white;
-        }
-
-            .ulContainer ul li a:after {
-                text-decoration: none;
+            .ulContainer ul li {
+                color: white;
+                margin-top: 20px;
             }
+
+                .ulContainer ul li span {
+                    font-family: 'Open Sans';
+                    font-size: 16px;
+                    line-height: 100%;
+                    vertical-align: middle
+                }
+
+                .ulContainer ul li a {
+                    text-decoration: none;
+                    color: white;
+                }
+
+                    .ulContainer ul li a:after {
+                        text-decoration: none;
+                    }
 </style>
-    
+
 
 <html>
 <body>
     <div style="display:flex;width:100%;height:100%;height:100vh">
         <div class="menuColumn">
             <div class="logoContainer">
-                <img src="~/images/Logo_landscape.png" width="60%"/>
+                <img src="~/images/Logo_landscape.png" width="60%" />
             </div>
             <div class="ulContainer">
-                
+
                 <ul>
-                    <li>
-                        <img class="menuLogo" src="~/images/icon/home_white.png"/>
-                        <a asp-controller="Home" asp-action="Index"><span>Home</span></a>
-                    </li>
-                    <li> 
-                        <img class="menuLogo" src="~/images/icon/booking_white.png"/>
-                        <a asp-controller="Reservation" asp-action="Index">
-                        <span>Reservation</span>
-                        </a>
-                    </li>
-                    <li>
-                        <img class="menuLogo" src="~/images/icon/table_white.png"/>
-                        <span>Sitting</span>
-                     </li>
-                    <li>
-                        <img class="menuLogo" src="~/images/icon/menu_white.png"/>
-                        @*<a asp-controller="Food" asp-action="Index"><span>Menu</span></a> *@
-                        <a asp-controller="Home" asp-action="AllFood"><span>Menu</span></a>
-                    </li>
-                    <li>
-                        <img class="menuLogo" src="~/images/icon/guest_white.png"/>
-                        <span>Guests</span>
-                    </li>
-                    <li>
-                        <img class="menuLogo" src="~/images/icon/report_white.png"/>
-                        <span>Reports</span>
-                    </li>
-                    <li>
-                        <img class="menuLogo" src="~/images/icon/staff_white.png"/>
-                        <span>Staff</span>
-                    </li>
-                    <li>
-                        <img class="menuLogo" src="~/images/icon/setting_white.png"/>
-                        <span>Settings</span>
-                    </li>
-                    
+                     @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li>
+                            <img class="menuLogo" src="~/images/icon/home_white.png" />
+                            <a asp-controller="Home" asp-action="Index"><span>Home</span></a>
+                        </li>
+
+                        @if (User.IsInRole("Member"))
+                        {
+                            <li>
+                                <img class="menuLogo" src="~/images/icon/report_white.png" />
+                                
+                                @*<a asp-controller="Reservation" asp-action="RsvtHistory"><span>My Reservation</span></a>*@
+                                <a href="@Url.Action("MyRsvt", new { email = @User.Identity.Name })"><span>My Reservation</span></a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Staff"))
+                        {
+                            <li>
+                                <img class="menuLogo" src="~/images/icon/booking_white.png" />
+                                <a asp-controller="Reservation" asp-action="AllRsvt">
+                                    <span>Reservation</span>
+                                </a>
+                            </li>
+                            
+
+                            @if (User.IsInRole("Manager"))
+                            {
+                                <li>
+                                    <img class="menuLogo" src="~/images/icon/report_white.png" />
+                                    @*<span>Reports</span>*@
+                                    <a asp-controller="Reservation" asp-action="AllRsvt"><span>Reports</span></a>
+                                </li>
+                                <li>
+                                    <img class="menuLogo" src="~/images/icon/table_white.png" />
+                                    <span>Sitting</span>
+                                    <ul style="margin-left:40px">
+                                        <li style="list-style:circle">
+                                            <a asp-controller="ReservationTime" asp-action="Index"><span>TimeSlot</span></a>
+                                        </li>
+                                        <li style="list-style:circle">
+                                            <a asp-controller="ReservationType" asp-action="Index"><span>Type</span></a>
+                                        </li>
+                                        <li style="list-style:circle">
+                                            <a asp-controller="Area" asp-action="Index"><span>Area</span></a>
+                                        </li>
+                                        <li style="list-style:circle">
+                                            <a asp-controller="Table" asp-action="Index"><span>Table</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <img class="menuLogo" src="~/images/icon/menu_white.png" />
+                                    <a asp-controller="Home" asp-action="AllFood"><span>Menu</span></a>
+                                    
+                                </li>
+                                <li>
+                                    <img class="menuLogo" src="~/images/icon/guest_white.png" />
+                                    <a href="@Url.Action("member", "User")"><span>Members</span></a>
+                                </li>
+                                <li>
+                                    <img class="menuLogo" src="~/images/icon/staff_white.png" />
+                                    <a href="@Url.Action("staff", "User")"><span>Staff</span></a>
+                                </li>
+                            }
+                        }
+                    }
+
+
                 </ul>
                 <div style="width:100%;border-bottom: 2px grey solid">
-                    
                 </div>
             </div>
             <div class="profileContainer">
-                <div>
-                    <img src="~/images/TomCruise.png" height="60px" style="border-radius:50%" />
-                </div>
-                <div class="profile">
-                    
-                        Yifeng Sun
-                        <br />
-                        iorisun.au@gmail.com
-                    
-                </div>
-            </div>
+
+                @*<div class="profile">
+
+                Yifeng Sun
+                <br />
+                <a asp-area="identity" asp-page="/Account/Manage/Index">iorisun.au@gmail.com</a>
+                <a style="text-decoration:none;color:white" id="login" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Login</a>
+
+                </div>*@
+                <ul style="display:flex;flex-direction:column;list-style:none;padding:0">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <div style="display:flex;flex-direction:row">
+                            <div>
+                                <img src="~/images/iori.JPG" height="60px" style="border-radius:50%" />
+                            </div>
+                            <div style="margin-left:15px">
+                                <list style="margin-right:10px">
+                                    <a style="text-decoration:none;color:white" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                                </list>
+                                <li>
+                                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button id="logout" type="submit" style="color:yellow;font-weight:bold">Logout</button>
+                                    </form>
+                                </li>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                <li style="margin-right:10px">
+                    <a style="text-decoration:none;color:white" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                </li>
+                <li>
+                    <a style="text-decoration:none;color:white" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                </li>
+                    }
+            </ul>
         </div>
-        <div class="contentColumn">
-            
-              
-                    
-                        @RenderBody()
-                    
-                
-           
-        </div>
-       
+    </div>
+    <div class="contentColumn">
+
+
+
+            @RenderBody()
+
+
+
+    </div>
+
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

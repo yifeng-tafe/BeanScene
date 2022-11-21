@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BeanScene.Areas.Identity.Data;
 using BeanScene.Models;
 using BeanScene.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BeanScene.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class TableController : Controller
     {
         private readonly ApplicationDBContext _context;

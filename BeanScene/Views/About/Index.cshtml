@@ -7,19 +7,9 @@
 <body>
     <div class="banner">
         <div class="logoContainer">
-            <img class="logo" src="~/images/Logo_landscape.png" />
-        </div>
-        <div class="menuContainer">
-            <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="AllFood">AllFood</a>
-            <div class="btnMenuContainer">
-                @Html.Partial("_BtnMenu")
-            </div>
-            <div class="btnReservContainer">
-                @Html.Partial("_BtnReserv")
-            </div>
-            <div>
-                @Html.Partial("_LoginPartial")
-            </div>
+            <a href=@Url.Action("Index", "Home")>
+                <img class="logo" src="~/images/Logo_landscape.png" />
+            </a>
         </div>
     </div>
     <div class="row">

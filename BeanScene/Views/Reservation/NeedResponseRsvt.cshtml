@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BeanScene.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MgmtLayout.cshtml";
+
+}
+
+<h1>Need Response Requests</h1>
+<div style="display:flex;flex-direction:row">
+<a type=button class="btn btn-success btn-lg" href=@Url.Action("ConfirmedRsvt", "Reservation") >Confirmed</a> 
+
+<a style="margin-left:20px" type=button class="btn btn-primary btn-lg" href=@Url.Action("RequestedRsvt", "Reservation") >Requested</a> 
+
+<a style="margin-left:20px" type=button class="btn btn-danger btn-lg" href=@Url.Action("NeedResponseRsvt", "Reservation") >Need Response</a>
+
+<a style="margin-left:20px" type=button class="btn btn-warning btn-lg" href=@Url.Action("RejectedRsvt", "Reservation") >Rejected</a>
+
+<a style="margin-left:20px" type=button class="btn btn-secondary btn-lg" href=@Url.Action("AllRsvt", "Reservation") >All</a>
+<a style="margin-left:20px" type=button class="btn btn-success btn-lg" href=@Url.Action("SeatedRsvt", "Reservation") >Seated</a>
+<a style="margin-left:20px" type=button class="btn btn-info btn-lg" href=@Url.Action("OrderedRsvt", "Reservation") >Ordered</a>
+<a style="margin-left:20px" type=button class="btn btn-light btn-lg" href=@Url.Action("PaidRsvt", "Reservation") >Paid</a>
+<a style="margin-left:20px" type=button class="btn btn-dark btn-lg" href=@Url.Action("CompletedRsvt", "Reservation") >Completed</a>
+</div>
+
+<hr/>
+<div  style="flex-wrap:wrap;overflow:auto;height:60vh">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Request Time
+            </th>
+            <th>
+                Guest Name
+            </th>
+            <th>
+                Reserving Date
+            </th>
+            <th>
+                Reserving Time
+            </th>
+            <th>
+                Guests
+            </th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationMadeTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName) 
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationDate)
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReserveTime.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfGuest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a type="button" class="btn btn-secondary btn-xl" asp-action="Confirmed" asp-route-id="@item.Id"><span>Check Availability</span></a>
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

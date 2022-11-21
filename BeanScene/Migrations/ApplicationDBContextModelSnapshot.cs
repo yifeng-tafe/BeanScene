@@ -188,33 +188,35 @@ namespace BeanScene.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MemberId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("NumberOfGuest")
                         .HasColumnType("int");
 
-                    b.Property<string>("Requirement")
+                    b.Property<string>("RequestSource")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReservationTypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("Requirement")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ReserveDate")
+                    b.Property<DateTime?>("ReservationDate")
                         .IsRequired()
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReservationMadeTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReservationTimeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TableId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ReservationTypeId");
+                    b.HasIndex("ReservationTimeId");
 
                     b.ToTable("Reservation");
                 });
@@ -312,6 +314,32 @@ namespace BeanScene.Migrations
                     b.HasIndex("AreaID");
 
                     b.ToTable("Table");
+                });
+
+            modelBuilder.Entity("BeanScene.Models.TableAvailability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Availability")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservationId");
+
+                    b.HasIndex("TableId");
+
+                    b.ToTable("TableAvailability");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -464,13 +492,13 @@ namespace BeanScene.Migrations
 
             modelBuilder.Entity("BeanScene.Models.Reservation", b =>
                 {
-                    b.HasOne("BeanScene.Models.ReservationType", "ReserveType")
+                    b.HasOne("BeanScene.Models.ReservationTime", "ReserveTime")
                         .WithMany()
-                        .HasForeignKey("ReservationTypeId")
+                        .HasForeignKey("ReservationTimeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ReserveType");
+                    b.Navigation("ReserveTime");
                 });
 
             modelBuilder.Entity("BeanScene.Models.ReservationTime", b =>
@@ -493,6 +521,25 @@ namespace BeanScene.Migrations
                         .IsRequired();
 
                     b.Navigation("Areas");
+                });
+
+            modelBuilder.Entity("BeanScene.Models.TableAvailability", b =>
+                {
+                    b.HasOne("BeanScene.Models.Reservation", "Reservation")
+                        .WithMany()
+                        .HasForeignKey("ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BeanScene.Models.Table", "Table")
+                        .WithMany()
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("Table");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

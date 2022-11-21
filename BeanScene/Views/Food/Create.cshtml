@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_MgmtLayout.cshtml";
 }
 
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
 <h1>Create</h1>
 
 <h4>Food</h4>
@@ -28,30 +31,82 @@
                 <input asp-for="Food.Price" class="form-control" />
                 <span asp-validation-for="Food.Price" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Food.ImageURL" class="control-label"></label>
-                <input asp-for="Food.ImageURL" class="form-control" />
-                <span asp-validation-for="Food.ImageURL" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Food.CategoryId" class="control-label"></label>
                 <br />
                 @Html.DropDownListFor(model=>model.Food.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new {@class="form-control- form-select"})
-                
+
                 <br />
-@*                <select asp-for="Food.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-*@            </div>
+                @*                <select asp-for="Food.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                *@
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary btn-md" />
-                <a type="button" class="btn btn-primary btn-md" href="@Url.Action("Index")">
-                    <span>Go Back</span></a>
+                <label asp-for="Food.ImageURL" class="control-label"></label>
+                <input asp-for="Food.ImageURL" class="form-control" />
+                <div id="image-dropzone">
+                    Drag and drop file(s) here or click to upload.
+                </div>
+                <span asp-validation-for="Food.ImageURL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary btn-md"/>
+                <a type="button" class="btn btn-primary btn-md" href="@Url.Action("AllFood", "Home")">
+                    <span>Go Back</span>
+                </a>
             </div>
         </form>
     </div>
 </div>
 
+<script defer>
+
+    // Disable auto-discovery of Dropzones
+    Dropzone.autoDicover = false
+
+
+    // Configuration for the dropzone - selector + config object
+    let imageDropzone = new Dropzone("#image-dropzone", {
+        paramName: "file",              // The name that will be used to transfer the file
+        url: "/Food/ImageUpload",       // URL endpoint/action for the image upload
+        maxFiles: 1,                    // Only 1 file can be uploaded
+        init: function() {              // Runs on initialisation
+            // Add the "dropzone" class onto our div to activate the default Dropzone styling
+            // It's not added initially in dorder to stop the dropzone being automatically initialised (and stuffing things up!)
+            // use console.log({thisThing: this.element}) to serach the div we want to
+            if (this.element) {
+                this.element.classList.add("dropzone")
+            }
+        },
+        success: function(file) {       // Runs on successful image upload
+
+            console.log("Image uploaded successfully...")
+
+            console.log({ file })
+
+            // Get uploaded image URL from response ImageUpload action (default to empty string)
+            const uploadedFileUrl = file?.xhr?.responseText ?? ""     
+
+            // Get hidden input for ImageUrl
+            const imageUrlInput = document.getElementById("Food_ImageURL")  
+
+            // Make sure both the hidden input and teh image URL exist
+            if (imageUrlInput && uploadedFileUrl) {
+
+                // Update ImageUrl for teh Book based on the uploaded file (remove extra double quotes from responseText)
+                imageUrlInput.value = uploadedFileUrl.replaceAll('"', '')
+            }
+
+            console.log({ imageUrlInput }, { uploadedFileUrl })
+
+        }
+    })
+</script>
+
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

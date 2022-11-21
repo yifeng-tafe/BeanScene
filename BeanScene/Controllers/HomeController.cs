@@ -4,6 +4,7 @@ using BeanScene.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using BeanScene.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BeanSceneWeb.Controllers
 {
@@ -24,10 +25,17 @@ namespace BeanSceneWeb.Controllers
             return View();
         }
 
+        public IActionResult Reports()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
         }
+
+        [Authorize(Roles = "Manager")]
 
         public IActionResult AllFood(string search)
         {
@@ -61,6 +69,11 @@ namespace BeanSceneWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult GotRequest()
+        {
+            return View();
         }
     }
 }

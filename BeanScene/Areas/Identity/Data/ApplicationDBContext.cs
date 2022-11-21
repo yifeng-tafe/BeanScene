@@ -78,7 +78,10 @@ namespace BeanScene.Areas.Identity.Data
 
         public DbSet<BeanScene.Models.ReservationTime>? ReservationTime { get; set; }
 
-        public DbSet<BeanScene.Models.Reservation>? Reservation { get; set; }
+        public DbSet<BeanScene.Models.Reservation> Reservation { get; set; }
+
+        public DbSet<BeanScene.Models.TableAvailability> TableAvailability { get; set; }
+
 
 
 

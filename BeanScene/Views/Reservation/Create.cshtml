@@ -1,97 +1,217 @@
-﻿@model BeanScene.Models.Reservation
+﻿@model BeanScene.ViewModels.ReservationViewModel
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_MgmtLayout.cshtml";
 }
 
-<h1>Create</h1>
+@using Microsoft.AspNetCore.Identity
+@using BeanScene.Areas.Identity.Data
 
-<h4>Reservation</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TableId" class="control-label"></label>
-                <input asp-for="TableId" class="form-control" />
-                <span asp-validation-for="TableId" class="text-danger"></span>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+    html {
+        padding: 0px;
+        margin: 0px;
+        height: 100%;
+        width: 100%
+    }
+
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .main {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        display: row;
+        padding: 0;
+        margin: 0;
+    }
+
+    .imageContainer {
+        width: 40%;
+        height: 100%;
+    }
+
+    .loginContainer {
+        width: 60%;
+        height: 100%
+    }
+
+    form {
+        width: 100%;
+        height: min-content;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .loginBtn {
+        width: 120px;
+    }
+</style>
+
+<div style="height:100%;width:100%;padding:0;margin:0;">
+    <div style="padding:0;margin:0;height:100%;width:100%;display:flex;flex-direction:row;">
+        <div class="imageContainer" style="width:420px;height:100vh;">
+            <img src="~/images/LoginImage.jpg" style="height:100%;width:100%;object-fit:cover" />
+        </div>
+        <div style="flex:1;display:flex;width:100%;height:100vh;padding:10px;overflow:hidden;background-color:#d4ddda;flex-direction:row;display:flex">
+            <div class="infoContainer" style="width:350px; border-color:grey;border-right-width:1px;border-right-style:solid;padding-right:20px;">
+                <p style="font-weight:bold; font-size:32px;">MAKE A RESERVATION</p>
+                <p>We look forward to welcoming you to Bean Scene.</p>
+                <p>Please note you will receive a confirmation call once your reservation has been successful. If you do not receive this confirmation call, there may have been an error in your reservation. Please contact our reservations team on (02) 9999 9999 if you have any queries.</p>
+                <p>If you are feeling unwell, please stay at home and call our reservations team to postpone your booking until another time. BeanScene is taking every possible precaution to ensure the health and safety of our guests, our staff and suppliers. For detailed information on our health and safety procedures and requirements, please visit our Health & Safety page.</p>
+                <p>Please view our reservation and cancellation policy ahead of your visit to BeanScene.</p>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
+            <div style="padding-left:20px;width:50%;display:flex;flex:1;flex-direction:column">
+                <h4>Request Form</h4>
+                <hr />
+                <div style="width:100%">
+                    <div style="width:100%;">
+                        <form asp-action="Create" style="width:100%;display:flex;flex-direction:column">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            @*<div class="form-group">
+                            <label asp-for="Reservation.ReservationMadeTime" class="control-label"></label>
+                            <input asp-for="Reservation.ReservationMadeTime" class="form-control" />
+                            <span asp-validation-for="Reservation.ReservationMadeTime" class="text-danger"></span>
+                            </div>*@
+                            <div style="width:100%;display:flex;flex-direction:row">
+                                <div style="width:250px; margin-right:30px">
+                                    @*<div class="form-group">
+                                        <label asp-for="Reservation.MemberId" class="control-label">Membership ID</label>
+                                        <input asp-for="Reservation.MemberId" class="form-control" />
+                                        <span asp-validation-for="Reservation.MemberId" class="text-danger"></span><br />
+                                    </div>*@
+                                    <div class="form-group">
+                                        <label asp-for="Reservation.ReservationDate" class="control-label">Reservation Date</label>
+                                        <input asp-for="Reservation.ReservationDate" class="form-control" />
+                                        <span asp-validation-for="Reservation.ReservationDate" class="text-danger"></span><br />
+                                    </div>
+                                    @*<div class="form-group">
+                                    <div>
+                                    Reservation type:
+                                    @Html.DropDownList("ReservationType", new SelectList(Model.ReservationTypes, "Id", "Name"), new { onchange = "console.log('filter the second list')" })
+                                    </div>
+                                    </div>*@
+                                    <div class="form-group">
+                                        <label asp-for="Reservation.ReserveTime" class="control-label">Reservation Time</label>
+                                        @*<select asp-for="Reservation.ReservationTimeId" class ="form-control" asp-items="ViewBag.Reservation.ReservationTimeId"></select>*@
+                                        <br />
+                                        @Html.DropDownListFor(model=>model.Reservation.ReservationTimeId, new SelectList(Model.ReservationTimes, "Id", "Name"), new {@class="form-control- form-select"})
+                                        <br />
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Reservation.NumberOfGuest" class="control-label">Number of Guest(s)</label>
+                                        <input asp-for="Reservation.NumberOfGuest" class="form-control" />
+                                        <span asp-validation-for="Reservation.NumberOfGuest" class="text-danger"></span>
+                                        <br />
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Reservation.RequestSource" class="control-label">Request Source</label>
+                                        @if (User.IsInRole("Staff") || User.IsInRole("Manager"))
+                                        {
+                                            <input asp-for="Reservation.RequestSource" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <input asp-for="Reservation.RequestSource" value="Online" class="form-control" pplaceholder="Online" readonly/>
+                                        }
+                                        
+                                        <span asp-validation-for="Reservation.RequestSource" class="text-danger"></span>
+                                        <br />
+                                    </div>
+                                    
+                                </div>
+                                <div style="width:250px">
+                                    <div class="form-group">
+                                        <label asp-for="Reservation.FirstName" class="control-label"></label>
+                                        @if (SignInManager.IsSignedIn(User))
+                                        {
+                                            <input asp-for="Reservation.FirstName" value="@((await UserManager.GetUserAsync(User)).FirstName)" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <input asp-for="Reservation.FirstName" class="form-control" />
+                                        }
+                                        
+                                        <span asp-validation-for="Reservation.FirstName" class="text-danger"></span><br />
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Reservation.LastName" class="control-label"></label>
+                                        @if (SignInManager.IsSignedIn(User))
+                                        {
+                                            <input asp-for="Reservation.LastName" value="@((await UserManager.GetUserAsync(User)).LastName)" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <input asp-for="Reservation.LastName" class="form-control" />
+                                        }
+                                        <span asp-validation-for="Reservation.LastName" class="text-danger"></span><br />
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Reservation.Email" class="control-label"></label>
+                                        
+                                        @if (SignInManager.IsSignedIn(User))
+                                        {
+                                            <input asp-for="Reservation.Email" value="@((await UserManager.GetUserAsync(User)).Email)" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <input asp-for="Reservation.Email" class="form-control" />
+                                        }
+                                        <span asp-validation-for="Reservation.Email" class="text-danger"></span><br />
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Reservation.ContactNumber" class="control-label"></label>
+                                        <input asp-for="Reservation.ContactNumber" class="form-control" />
+                                        <span asp-validation-for="Reservation.ContactNumber" class="text-danger"></span><br />
+                                    </div>
+
+                                    @* <div class="form-group">
+                                    <label asp-for="Reservation.Status" class="control-label"></label>
+                                    <select asp-for="Reservation.Status" class="form-control"></select>
+                                    <span asp-validation-for="Reservation.Status" class="text-danger"></span>*@
+                                    @* <br />
+                                    @Html.DropDownListFor(model=>model.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new {@class="form-control- form-select"})
+                                    <br />*@
+                                    @* </div>*@
+
+                                </div>
+                            </div>
+                            <div class="form-group" style="width:530px">
+                                <label asp-for="Reservation.Requirement" class="control-label">Special Requirement</label>
+                                <input asp-for="Reservation.Requirement" class="form-control" />
+                                <span asp-validation-for="Reservation.Requirement" class="text-danger"></span><br />
+                            </div>
+                            <div class="form-group" style="padding-left:460px;">
+                                <input type="submit" name="submit" value="Create" class="btn btn-primary" style="background-color:#6A6E6D" />
+                            </div>
+                        
+                        </form>
+                        <div>
+                            <button style="background-color:#6A6E6D; border-color:#6A6E6D;border-radius:4px;height:37.97px;width:71.72px;border-style:none;color:white;margin-top:40px" onclick="window.location='@Url.Action("Index", "Home")'">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-            <div class="form-group">
-                <label asp-for="ReserveDate" class="control-label"></label>
-                @Html.EditorFor(model => model.ReserveDate, new { htmlAttributes = new {@class = "datepicker"}})
-                @*<input asp-for="ReserveDate" class="form-control" />*@
-                <span asp-validation-for="ReserveDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReservationTypeId" class="control-label"></label>
-                <select asp-for="ReservationTypeId" class ="form-control" asp-items="ViewBag.ReservationTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumberOfGuest" class="control-label"></label>
-                <input asp-for="NumberOfGuest" class="form-control" />
-                <span asp-validation-for="NumberOfGuest" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Requirement" class="control-label"></label>
-                <input asp-for="Requirement" class="form-control" />
-                <span asp-validation-for="Requirement" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContactNumber" class="control-label"></label>
-                <input asp-for="ContactNumber" class="form-control" />
-                <span asp-validation-for="ContactNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-<link href="~/Contents/themes/base/jquery-ui.min.css" rel="stylesheet" />
-
-@section scripts
-{
-    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-   $(".datepicker").datepicker({
-      dateFormat: "dd-mm-yy",
-      changemonth: true,
-      changeyear: true
-      });
-   });
-    </script>
-}
 

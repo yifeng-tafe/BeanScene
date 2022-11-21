@@ -14,10 +14,12 @@ namespace BeanScene.Controllers
     public class FoodController : Controller
     {
         private readonly ApplicationDBContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public FoodController(ApplicationDBContext context)
+        public FoodController(ApplicationDBContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Food
@@ -198,6 +200,30 @@ namespace BeanScene.Controllers
         private bool FoodExists(int id)
         {
           return (_context.Food?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        // POST: Book/ImageUpload
+        // Handle image upload for book
+        [HttpPost, ActionName("ImageUpload")]
+        public async Task<IActionResult> ImageUpload(IFormFile file)  
+        {
+            // Image save folder within wwwroot
+            string imageFolder = "images/food";
+
+            // Create the folder if it doesn't exist
+            string dirPath = Path.Combine(_webHostEnvironment.WebRootPath, imageFolder);
+            if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
+
+            // Create image file (handle the upload)
+            string filePath = Path.Combine(dirPath, file.FileName);
+            using (FileStream fs = System.IO.File.Create(filePath))
+            {
+                file.CopyTo(fs);
+            }
+
+            // Return 200 + image path
+            return StatusCode(200, $"/{imageFolder}/{file.FileName}");
+
         }
     }
 }

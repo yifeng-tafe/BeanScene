@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "~/Views/Shared/_MgmtLayout.cshtml";
+}
+@using Microsoft.AspNetCore.Identity
+@using BeanScene.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<h1>Welcome Back, @(UserManager.GetUserAsync(User).Result.FirstName) @((await UserManager.GetUserAsync(User)).LastName)!</h1>
+<div>
+    
+</div>
+

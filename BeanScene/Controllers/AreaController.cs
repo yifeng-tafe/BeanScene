@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BeanScene.Areas.Identity.Data;
 using BeanScene.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BeanScene.Controllers
 {
+    [Authorize(Roles ="Manager")]
     public class AreaController : Controller
     {
         private readonly ApplicationDBContext _context;

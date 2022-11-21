@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Reports";
+    Layout = "~/Views/Shared/_MgmtLayout.cshtml";
+}
+
+<h1>Reservation Reports</h1>
+
+<div style="display:flex;flex-direction:row">
+<a type=button class="btn btn-success btn-lg" href=@Url.Action("ConfirmedRsvt", "Reservation") >Confirmed</a> 
+
+<a style="margin-left:20px" type=button class="btn btn-primary btn-lg" href=@Url.Action("RequestedRsvt", "Reservation") >Requested</a> 
+
+<a style="margin-left:20px" type=button class="btn btn-danger btn-lg" href=@Url.Action("NeedResponseRsvt", "Reservation") >Need Response</a>
+
+<a style="margin-left:20px" type=button class="btn btn-warning btn-lg" href=@Url.Action("RejectedRsvt", "Reservation") >Rejected</a>
+
+<a style="margin-left:20px" type=button class="btn btn-secondary btn-lg" href=@Url.Action("AllRsvt", "Reservation") >Rejected</a>
+
+</div>
+<hr />
+
+
+

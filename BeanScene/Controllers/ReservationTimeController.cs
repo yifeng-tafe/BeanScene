@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BeanScene.Areas.Identity.Data;
 using BeanScene.Models;
 using BeanScene.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BeanScene.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class ReservationTimeController : Controller
     {
         private readonly ApplicationDBContext _context;
@@ -80,7 +82,7 @@ namespace BeanScene.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
             //}
-            return View(reservationTime);
+            //return View(reservationTime);
         }
 
         // GET: ReservationTime/Edit/5

@@ -4,7 +4,7 @@
 
 namespace BeanScene.Migrations
 {
-    public partial class AddReservatonClass2 : Migration
+    public partial class AddTableAvailabilityClass : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

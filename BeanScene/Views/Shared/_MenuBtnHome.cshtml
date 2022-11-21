@@ -1,8 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+@using Microsoft.AspNetCore.Identity
+@using BeanScene.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
@@ -11,23 +12,23 @@
 
 </head>
 <script>
-        function closeBtn() {
-            document.getElementById('active1').checked = false;
-        };
-        function changeBackText() {
-            setTimeout(function() {
-                document.getElementById("resLabel").innerHTML = "MAKE A RESERVATION";
-                document.getElementById("btnStyle").style.visibility = "visible";
-            }, 350)
-        };
-        function changeText() {
-            document.getElementById("resLabel").innerHTML = "";
-            document.getElementById("btnStyle").style.visibility = "hidden";
-        };
-        function nextStep() {
-            document.getElementById("bar").src = "/images/icon/stepsbar03.png";
-        };
-    </script>
+    function closeBtn() {
+        document.getElementById('active1').checked = false;
+    };
+    function changeBackText() {
+        setTimeout(function() {
+            document.getElementById("resLabel").innerHTML = "MAKE A RESERVATION";
+            document.getElementById("btnStyle").style.visibility = "visible";
+        }, 350)
+    };
+    function changeText() {
+        document.getElementById("resLabel").innerHTML = "";
+        document.getElementById("btnStyle").style.visibility = "hidden";
+    };
+    function nextStep() {
+        document.getElementById("bar").src = "/images/icon/stepsbar03.png";
+    };
+</script>
 
 
 <div>
@@ -40,67 +41,48 @@
             <li><a asp-area="" asp-controller="Home" asp-action="Index">HOME</a></li>
             <li><a asp-area="" asp-controller="About" asp-action="Index">ABOUT</a></li>
             <li><a asp-area="" asp-controller="Category" asp-action="Index">CONTACT</a></li>
-            <li><a asp-area="identity" asp-page="/Account/Login">LOGIN</a></li>
-            <li><a asp-area="" asp-controller="Reservation" asp-action="Index">RESERVATION</a></li>
+            @if (User.IsInRole("Member"))
+            {
+                <li><a asp-area="" asp-controller="Reservation" asp-action="Welcome">RESERVATION</a></li>
 
-
+            }
+            else if (User.IsInRole("Staff") || User.IsInRole("Manager"))
+            {
+                <li><a asp-area="" asp-controller="Reservation" asp-action="Welcome">MANAGEMENT</a></li>
+            }
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <li><a asp-area="identity" asp-page="/Account/Login">LOGIN</a></li>
+            }
         </ul>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div style="position:absolute;bottom:20px;left:30%;display:flex;flex-direction:row">
+            <div>
+                <img src="~/images/iori.JPG" height="60px" style="border-radius:50%" />
+            </div>
+            <div style="margin-left:15px; justify-content:center">
+                
+                    <a style="text-decoration:none;color:white" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @((await UserManager.GetUserAsync(User)).FirstName)!</a>
+                
+                
+                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button id="logout" type="submit" style="background-color:black;color:yellow;font-weight:bold">Logout</button>
+                    </form>
+                
+            </div>
+        </div>
+    }
+        
 
     </div>
 
-    
+
 
     <input type="checkbox" id="active1" onclick=changeText()>
-    <label for="active1" class="btn" id="btnStyle"><span id="resLabel">MAKE A RESERVATION</span></label>
-    <label for="active1" class="close"></label>
-    <div class="resWrapper">
-        <div style="width:100%;text-align:end;padding-top:20px;padding-right:30px">
-            <button style="text-decoration:none;background:#d4ddda;border:0" onclick=closeBtn(),changeBackText()>
-                <img src="/images/icon/cross-black.png" width="30" />
-            </button>
-
-        </div>
-        <div style="display:flex;flex-direction:row;padding-top:0px">
-            <div class="infoContainer">
-                <p style="font-weight:bold; font-size:32px;">MAKE A RESERVATION</p>
-                <p>We look forward to welcoming you to Quay.</p>
-                <p>Please note you will receive a confirmation email once your reservation has been successful. If you do not receive this confirmation email, there may have been an error in your reservation. Please contact our reservations team on (02) 9251 5600 if you have any queries.</p>
-                <p>If you are feeling unwell, please stay at home and call our reservations team to postpone your booking until another time. Quay is taking every possible precaution to ensure the health and safety of our guests, our staff and suppliers. For detailed information on our health and safety procedures and requirements, please visit our Health & Safety page.</p>
-                <p>Please view our reservation and cancellation policy ahead of your visit to Quay</p>
-            </div>
-            <div class="optionContainer">
-                <img src="~/images/icon/stepsbar01.png" id="bar" width="250" />
-                <div style="background:white;border-radius:4px;height:300px;width:400px;margin-top:50px">
-                datepicker
-                </div>
-                <div style="background:white;border-radius:4px;height:150px;width:400px;margin-top:50px;align-items:center">
-                <text style="font-family:sans-serif;font-size:20px;margin-top:20px">How many people are coming?</text>
-                <div style="display:flex;flex-direction:row;margin-top:50px;justify-content:center">
-                <div>
-                <input style="font-size:26px;background:white;border-radius:4px;border-color:#313131;border-width:1px;width:120px;height:50px;margin-right:20px;text-align:center" placeholder="0"/>
-                </div>
-                <div>
-                <button style="margin-right:20px;height:50px;width:50px;border-radius:50%;background:black;color:white">
-                +
-                </button>
-                </div>
-                <div>
-                <button style="height:50px;width:50px;border-radius:50%;background:black;color:white">
-                -
-                </button>
-                </div>
-                </div>
-                </div>
-
-                <div style="display:flex;flex-direction:row;justify-content:space-between;margin-top:50px">
-                <button style="height:40px;width:100px;margin-right:20px" onclick=lastStep()>Back</button>
-                <button style="height:40px;width:100px" onclick=nextStep()>NEXT</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    @*<label for="active1" class="btn" id="btnStyle"><span id="resLabel">MAKE A RESERVATION</span></label>*@
+    <a asp-controller="Reservation" asp-action="Create" for="active1" class="btn" id="btnStyle"><span id="resLabel">MAKE A RESERVATION</span></a>
+    
 
 </div>
 
@@ -425,6 +407,5 @@
         display: flex;
         flex-direction: column
     }
-
 
 </style>
