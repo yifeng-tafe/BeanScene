@@ -32,6 +32,11 @@ namespace BeanScene.Areas.Identity.Data
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Category>(c => c.Property(c => c.Id).ValueGeneratedOnAdd());
@@ -83,7 +88,7 @@ namespace BeanScene.Areas.Identity.Data
         public DbSet<BeanScene.Models.TableAvailability> TableAvailability { get; set; }
 
 
-
+        
 
     }
 }

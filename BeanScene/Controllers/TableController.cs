@@ -73,24 +73,30 @@ namespace BeanScene.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TableViewModel tableVM)
         {
-            var table = new Table
-            {
-                Name = tableVM.Table.Name,
-                Areas = tableVM.Table.Areas,
-                AreaID = tableVM.Table.AreaID
 
-            };
-            
-            
-            
-            //if (ModelState.IsValid)
+            tableVM.Table.Areas = await _context.Area.FindAsync(tableVM.Table.AreaID);
+
+            //var table = new Table
             //{
-                _context.Add(table);
+            //    Name = tableVM.Table.Name,
+            //    Areas = tableVM.Table.Areas,
+            //    AreaID = tableVM.Table.AreaID
+
+            //};
+
+            ModelState.Clear();
+            //TryValidateModel(tableVM);
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(tableVM.Table);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            //}
+            }
             //ViewData["AreaID"] = new SelectList(_context.Area, "Id", "Name", table.AreaID);
-            return View(table);
+            tableVM.Areas = await _context.Area.ToListAsync();
+
+            return View(tableVM);
         }
 
         // GET: Table/Edit/5

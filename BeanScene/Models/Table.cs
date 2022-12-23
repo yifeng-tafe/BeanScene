@@ -13,6 +13,6 @@ namespace BeanScene.Models
         public int AreaID { get; set; }
 
         [Required]
-        public Area Areas { get; set; }
+        public virtual Area Areas { get; set; }
     }
 }

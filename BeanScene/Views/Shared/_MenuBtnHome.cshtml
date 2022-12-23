@@ -40,7 +40,7 @@
         <ul>
             <li><a asp-area="" asp-controller="Home" asp-action="Index">HOME</a></li>
             <li><a asp-area="" asp-controller="About" asp-action="Index">ABOUT</a></li>
-            <li><a asp-area="" asp-controller="Category" asp-action="Index">CONTACT</a></li>
+            <li><a asp-area="" asp-controller="About" asp-action="Contact">CONTACT</a></li>
             @if (User.IsInRole("Member"))
             {
                 <li><a asp-area="" asp-controller="Reservation" asp-action="Welcome">RESERVATION</a></li>

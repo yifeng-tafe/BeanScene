@@ -20,6 +20,6 @@ namespace BeanScene.Models
         public int CategoryId { get; set; }
 
         [Required]
-        public Category Catagory { get; set; }
+        public virtual Category Catagory { get; set; }
     }
 }

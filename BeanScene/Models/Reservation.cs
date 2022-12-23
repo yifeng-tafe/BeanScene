@@ -18,17 +18,20 @@ namespace BeanScene.Models
         [Required]
         public int ReservationTimeId { get; set; }
         [Required]
-        public ReservationTime ReserveTime { get; set; }
+        public virtual ReservationTime ReserveTime { get; set; }
 
         [Required]
+        [Range(1,200)]
         public int NumberOfGuest { get; set; }
 
         public string? Requirement { get; set; }
 
         [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required]
@@ -36,6 +39,7 @@ namespace BeanScene.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
 
         [Required]

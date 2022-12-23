@@ -265,7 +265,7 @@ namespace BeanScene.Controllers
             return View(await applicationDBContext.ToListAsync());
         }
 
-        [Authorize(Roles = "Member")]
+        [Authorize]
         // GET: Reservation History
         public async Task<IActionResult> MyRsvt(string email)
         {
@@ -296,6 +296,7 @@ namespace BeanScene.Controllers
         // GET: Reservations/Create
         public IActionResult Create()
         {
+            
             var model = new ReservationViewModel()
             {
                 
@@ -320,43 +321,58 @@ namespace BeanScene.Controllers
             //// Add model
             //_context.Add(ReservationVM.Reservation);
 
-            var reservation = new Reservation
-            {
-                ReservationMadeTime = DateTime.Now,
-                MemberId = User.Identity.Name,
-                ReservationDate = ReservationVM.Reservation.ReservationDate,
-                ReservationTimeId = ReservationVM.Reservation.ReservationTimeId,
-                ReserveTime = ReservationVM.Reservation.ReserveTime,
-                NumberOfGuest = ReservationVM.Reservation.NumberOfGuest,
-                Requirement = ReservationVM.Reservation.Requirement,
-                FirstName = ReservationVM.Reservation.FirstName,
-                LastName = ReservationVM.Reservation.LastName,
-                Email = ReservationVM.Reservation.Email,
-                ContactNumber = ReservationVM.Reservation.ContactNumber,
-                Status = Reservation.StatusEnum.Requested,
-                RequestSource = ReservationVM.Reservation.RequestSource,
-            };
+            // Update reservation data
+            ReservationVM.Reservation.ReservationMadeTime = DateTime.Now;
+            ReservationVM.Reservation.MemberId = User.Identity.Name;
+            ReservationVM.Reservation.Status = Reservation.StatusEnum.Requested;
+            ReservationVM.Reservation.ReserveTime = await _context.ReservationTime.FindAsync(ReservationVM.Reservation.ReservationTimeId);
 
-            //    if (ModelState.IsValid)
+
+            //var reservation = new Reservation
             //{
-            _context.Add(reservation);
-            await _context.SaveChangesAsync();
-            if (User.IsInRole("Manager") || User.IsInRole("Staff"))
+            //    ReservationMadeTime = DateTime.Now,
+            //    MemberId = User.Identity.Name,
+            //    ReservationDate = ReservationVM.Reservation.ReservationDate,
+            //    ReservationTimeId = ReservationVM.Reservation.ReservationTimeId,
+            //    ReserveTime = ReservationVM.Reservation.ReserveTime,
+            //    NumberOfGuest = ReservationVM.Reservation.NumberOfGuest,
+            //    Requirement = ReservationVM.Reservation.Requirement,
+            //    FirstName = ReservationVM.Reservation.FirstName,
+            //    LastName = ReservationVM.Reservation.LastName,
+            //    Email = ReservationVM.Reservation.Email,
+            //    ContactNumber = ReservationVM.Reservation.ContactNumber,
+            //    Status = Reservation.StatusEnum.Requested,
+            //    RequestSource = ReservationVM.Reservation.RequestSource,
+            //};
+
+            ModelState.Clear();
+            TryValidateModel(ReservationVM);
+
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("AllRsvt", "Reservation");
-            }
-            else if (User.IsInRole("Member"))
-            {
-                return RedirectToAction("MyRsvt", "Reservation", new {email=User.Identity.Name });
-            }
-            else
-            {
-                return RedirectToAction("GotRequest", "Home");
-            };
+                _context.Add(ReservationVM.Reservation);
+                await _context.SaveChangesAsync();
+                if (User.IsInRole("Manager") || User.IsInRole("Staff"))
+                {
+                    return RedirectToAction("AllRsvt", "Reservation");
+                }
+                else if (User.IsInRole("Member"))
+                {
+                    return RedirectToAction("MyRsvt", "Reservation", new {email=User.Identity.Name });
+                }
+                else
+                {
+                    return RedirectToAction("GotRequest", "Home");
+                };
             
-            //}
+            }
+
+            // Reload the reservation form (GET Create) - get data for the dropdown lists
+            ReservationVM.ReservationTypes = await _context.ReservationType.ToListAsync();
+            ReservationVM.ReservationTimes = await _context.ReservationTime.ToListAsync();
+
             //ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", food.CategoryId);
-            return View(reservation);
+            return View(ReservationVM);
         }
 
         [Authorize]
@@ -410,7 +426,14 @@ namespace BeanScene.Controllers
             //{
             _context.Add(reservation);
             await _context.SaveChangesAsync();
-            return RedirectToAction("MyRsvt", new { email = @User.Identity.Name });
+            if (User.IsInRole("Member"))
+            {
+                return RedirectToAction("MyRsvt", new { email = @User.Identity.Name });
+            }
+            else
+            {
+                return RedirectToAction("AllRsvt");
+            }
             //}
             //ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", food.CategoryId);
             return View(reservation);

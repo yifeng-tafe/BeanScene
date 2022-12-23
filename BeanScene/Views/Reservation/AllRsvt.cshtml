@@ -5,12 +5,21 @@
     Layout = "~/Views/Shared/_MgmtLayout.cshtml";
 }
 
-<h1>All Reservations</h1>
+
+
 @using Microsoft.AspNetCore.Identity
 @using BeanScene.Areas.Identity.Data
 
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager    
+@inject UserManager<ApplicationUser> UserManager   
+
+<div style="display:flex;flex-direction:row">
+<h1>All Reservations</h1>
+    <div style="display:flex;flex-direction:row;align-items:flex-end;margin-bottom:20px">
+            <a class="btn btn-primary"  style="border-radius:12px;margin-left:20px" asp-controller="Reservation" asp-action="MyCreate">
+                <span class="glyphicon glyphicon-plus icon"></span><span> New</span></a>
+        </div>
+</div>
 @if (User.IsInRole("Manager"))
 {
     <div style="display:flex;flex-direction:row">

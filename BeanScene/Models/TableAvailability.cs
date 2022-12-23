@@ -10,12 +10,12 @@ namespace BeanScene.Models
         [Required]
         public int ReservationId { get; set; }  
 
-        public Reservation Reservation { get; set; }
+        public virtual Reservation Reservation { get; set; }
 
         [Required]
         public int TableId { get; set; }    
 
-        public Table Table { get; set; }
+        public virtual Table Table { get; set; }
 
         public StatusEnum Availability { get; set; }
 

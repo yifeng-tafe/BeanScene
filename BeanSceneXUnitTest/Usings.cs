@@ -1,0 +1,11 @@
+global using Xunit;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using BeanScene.Controllers;
+global using BeanScene.Areas.Identity.Data;
+global using BeanScene.Models;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc;

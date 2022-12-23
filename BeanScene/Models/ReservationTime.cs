@@ -14,6 +14,6 @@ namespace BeanScene.Models
         public int ReservationTypeId { get; set; }
 
         [Required]
-        public ReservationType ReservationTypes { get; set; }
+        public virtual ReservationType ReservationTypes { get; set; }
     }
 }

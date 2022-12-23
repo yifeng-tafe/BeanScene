@@ -84,29 +84,13 @@
                     <div style="width:100%;">
                         <form asp-action="Create" style="width:100%;display:flex;flex-direction:column">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            @*<div class="form-group">
-                            <label asp-for="Reservation.ReservationMadeTime" class="control-label"></label>
-                            <input asp-for="Reservation.ReservationMadeTime" class="form-control" />
-                            <span asp-validation-for="Reservation.ReservationMadeTime" class="text-danger"></span>
-                            </div>*@
                             <div style="width:100%;display:flex;flex-direction:row">
                                 <div style="width:250px; margin-right:30px">
-                                    @*<div class="form-group">
-                                        <label asp-for="Reservation.MemberId" class="control-label">Membership ID</label>
-                                        <input asp-for="Reservation.MemberId" class="form-control" />
-                                        <span asp-validation-for="Reservation.MemberId" class="text-danger"></span><br />
-                                    </div>*@
                                     <div class="form-group">
                                         <label asp-for="Reservation.ReservationDate" class="control-label">Reservation Date</label>
-                                        <input asp-for="Reservation.ReservationDate" class="form-control" />
+                                        <input asp-for="Reservation.ReservationDate" type="date" min=@DateTime.Now.ToString("yyyy-MM-dd") max=@DateTime.Now.AddDays(90).ToString("yyyy-MM-dd") class="form-control" />
                                         <span asp-validation-for="Reservation.ReservationDate" class="text-danger"></span><br />
                                     </div>
-                                    @*<div class="form-group">
-                                    <div>
-                                    Reservation type:
-                                    @Html.DropDownList("ReservationType", new SelectList(Model.ReservationTypes, "Id", "Name"), new { onchange = "console.log('filter the second list')" })
-                                    </div>
-                                    </div>*@
                                     <div class="form-group">
                                         <label asp-for="Reservation.ReserveTime" class="control-label">Reservation Time</label>
                                         @*<select asp-for="Reservation.ReservationTimeId" class ="form-control" asp-items="ViewBag.Reservation.ReservationTimeId"></select>*@

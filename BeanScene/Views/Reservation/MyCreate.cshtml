@@ -64,7 +64,7 @@
     }
 </style>
             <div style="padding-left:20px;width:50%;display:flex;flex:1;flex-direction:column">
-                <h4>Request Form</h4>
+                <h1>Request Form</h1>
                 <hr />
                 <div style="width:100%">
                     <div style="width:100%;">
@@ -178,7 +178,7 @@
 
                                 </div>
                             </div>
-                            <div class="form-group" style="width:530px">
+                            <div class="form-group" style="width:510px">
                                 <label asp-for="Reservation.Requirement" class="control-label">Special Requirement</label>
                                 <input asp-for="Reservation.Requirement" class="form-control" />
                                 <span asp-validation-for="Reservation.Requirement" class="text-danger"></span><br />
@@ -189,8 +189,15 @@
                         
                         </form>
                         <div>
-                            <button style="background-color:#6A6E6D; border-color:#6A6E6D;border-radius:4px;height:37.97px;width:71.72px;border-style:none;color:white;margin-top:40px" onclick="window.location='@Url.Action("MyRsvt", "Reservation", new { email = @User.Identity.Name })'">Back</button>
-                        </div>
+                @if (User.IsInRole("Member"))
+                {
+                    <button style="background-color:#6A6E6D; border-color:#6A6E6D;border-radius:4px;height:37.97px;width:71.72px;border-style:none;color:white;margin-top:40px" onclick="window.location='@Url.Action("MyRsvt", "Reservation", new { email = @User.Identity.Name })'">Back</button>
+                }
+                else
+                {
+                     <button style="background-color:#6A6E6D; border-color:#6A6E6D;border-radius:4px;height:37.97px;width:71.72px;border-style:none;color:white;margin-top:40px" onclick="window.location='@Url.Action("AllRsvt", "Reservation")'">Back</button>
+                }
+            </div>
                     </div>
                 </div>
 
